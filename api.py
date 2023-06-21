@@ -39,7 +39,6 @@ async def create_user(user_input_data_contract: dict):
 @app.get("/users/")
 async def get_users():
     users = userCRUD.read_all()
-    print("USERS", users)
     return users
 # Get single user
 @app.get("/users/{user_id}")
@@ -53,12 +52,11 @@ async def update_user(user_id: int, user_input_data_contract: dict):
     user_searched = userCRUD.read(user_id)
     user_searched.name = user_input_data_contract["name"]
     user_searched.age = user_input_data_contract["age"]
-
     userCRUD.update(user_id, user_searched)
     return {"message": "User updated"}
 
 # Delete user
 @app.delete("/users/{user_id}")
 async def delete_user(user_id: int):
-    user = userCRUD.delete(user_id)
+    userCRUD.delete(user_id)
     return {"message": "User deleted"}
